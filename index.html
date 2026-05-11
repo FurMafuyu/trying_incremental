@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Furmafu</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+
+    <div class="header-stats">
+        <span class="stat-item">💰 Chips: <span id="statChips">0</span></span>
+        <span class="stat-item">⚡ Level: <span id="statLevel">1</span></span>
+    </div>
+
+    <h1>Furmafu</h1>
+
+    <div class="tab-container" id="tabContainer">
+        <button class="tab-button active-btn" onclick="openTab('casino')">
+            <img src="assets/icons/casino_tab_icon.png" alt="Casino Icon" class="tab-icon"> Casino
+        </button>
+
+        <button class="tab-button" onclick="openTab('settings')">Settings</button>
+    </div>
+
+    <div id="casino" class="tab-content active-tab">
+      
+      <div class="subtab-container">
+        <button class="subtab-button active-sub-btn" onclick="openSubTab('hall')">Hall</button>
+        <button class="subtab-button" onclick="openSubTab('cardroom')">Card room</button>
+      </div>
+ 
+      <div id="hall" class="subtab-content active-sub-tab">
+        <div class="chips-header-row">
+          <p id="currentChips">0 Chips</p>
+          <span class="header-production-text"><span id="chipsTotalProdText">+0.00</span> Chips/s</span>
+        </div>
+         
+        <div class="action-grid">
+          <div class="action-item-wrapper">
+            <button class="left-action-btn" onclick="buyCherryMax()">Max</button>
+        
+            <button class="hall-buy-btn" onclick="buyCherry()" id="cherrySlot">
+              <span class="btn-left" id="cherryLeft">a + [b]</span>
+              <span class="btn-middle">🍒 Cherries</span>
+              <span class="btn-right" id="cherryRight">(c Chips)</span>
+            </button>
+        
+            <span class="side-prod-text" id="cherryProdText">+0.00/s</span>
+          </div>
+        
+          <div class="action-item-wrapper">
+            <button class="left-action-btn" onclick="buyLemonMax()">Max</button>
+            
+            <button class="hall-buy-btn" onclick="buyLemon()" id="lemonSlot">
+              <span class="btn-left" id="lemonLeft">a + [b]</span>
+              <span class="btn-middle">🍋 Lemons</span>
+              <span class="btn-right" id="lemonRight">(c Chips)</span>
+            </button>
+            <span class="side-prod-text" id="lemonProdText">+0.00/s</span>
+          </div>
+          
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" onclick="buyBell()" id="bellSlot">
+              <span class="btn-left" id="bellLeft">a + b</span>
+              <span class="btn-middle">🔔 Bells</span>
+              <span class="btn-right" id="bellRight">c</span>
+            </button>
+            <span class="side-prod-text" id="bellProdText">+0.00/s</span>
+          </div>
+        
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" onclick="buyHorseshoe()" id="horseshoeSlot">
+              <span class="btn-left" id="horseshoeLeft">a + b</span>
+              <span class="btn-middle">🧲 Horseshoes</span>
+              <span class="btn-right" id="horseshoeRight">c</span>
+            </button>
+            <span class="side-prod-text" id="horseshoeProdText">0/s</span>
+          </div>
+        
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" onclick="buyLuckySeven()" id="luckySevenSlot">
+              <span class="btn-left" id="luckySevenLeft">a + b</span>
+              <span class="btn-middle">7️⃣ Lucky Sevens</span>
+              <span class="btn-right" id="luckySevenRight">c</span>
+            </button>
+            <span class="side-prod-text" id="luckySevenProdText">0/s</span>
+          </div>
+        
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" onclick="buySpins()" id="spinsSlot">
+              <span class="btn-left" id="spinsLeft">a + b</span>
+              <span class="btn-middle">💈 Spins</span>
+              <span class="btn-right" id="spinsRight">c</span>
+            </button>
+            <span class="side-prod-text" id="spinsProdText">0/s</span>
+          </div>
+
+          <div class="action-item-wrapper hidden-btn" id="cogsSlot">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn">
+              <span class="btn-left"></span>
+              <span class="btn-middle">Cogs</span>
+              <span class="btn-right"></span>
+            </button>
+            <span class="side-prod-text"></span>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div id="cardroom" class="subtab-content">
+        <h2>Card Room</h2>
+      
+        <div class="cardroom-container">
+          <div class="cardroom-left-wrapper">
+            
+            <div class="card-family-section">
+              <h3>Spades ♠️</h3>
+              <div class="cards-grid">
+                <div class="card-slot" onclick="showCardDetails('s2')"><img src="assets/cards/spade/2.png" alt="2 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('s3')"><img src="assets/cards/spade/3.png" alt="3 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('s4')"><img src="assets/cards/spade/4.png" alt="4 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('s5')"><img src="assets/cards/spade/5.png" alt="5 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('s6')"><img src="assets/cards/spade/6.png" alt="6 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('s7')"><img src="assets/cards/spade/7.png" alt="7 of Spades"></div>
+                
+                <div class="card-slot" onclick="showCardDetails('s8')"><img src="assets/cards/spade/8.png" alt="8 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('s9')"><img src="assets/cards/spade/9.png" alt="9 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('s10')"><img src="assets/cards/spade/10.png" alt="10 of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('sj')"><img src="assets/cards/spade/j.png" alt="Jack of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('sq')"><img src="assets/cards/spade/q.png" alt="Queen of Spades"></div>
+                <div class="card-slot" onclick="showCardDetails('sk')"><img src="assets/cards/spade/k.png" alt="King of Spades"></div>
+                
+                <div class="card-slot card-big" onclick="showCardDetails('s_ace')">
+                  <img src="assets/cards/spade/ace.png" alt="Ace of Spades">
+                </div>
+              </div>
+            </div>
+      
+            <div class="card-family-section">
+              <h3>Diamonds ♦️</h3>
+              <div class="cards-grid">
+                <div class="card-slot" onclick="showCardDetails('d2')"><img src="assets/cards/diamond/2.png" alt="2 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('d3')"><img src="assets/cards/diamond/3.png" alt="3 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('d4')"><img src="assets/cards/diamond/4.png" alt="4 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('d5')"><img src="assets/cards/diamond/5.png" alt="5 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('d6')"><img src="assets/cards/diamond/6.png" alt="6 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('d7')"><img src="assets/cards/diamond/7.png" alt="7 of Diamonds"></div>
+                
+                <div class="card-slot" onclick="showCardDetails('d8')"><img src="assets/cards/diamond/8.png" alt="8 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('d9')"><img src="assets/cards/diamond/9.png" alt="9 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('d10')"><img src="assets/cards/diamond/10.png" alt="10 of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('dj')"><img src="assets/cards/diamond/j.png" alt="Jack of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('dq')"><img src="assets/cards/diamond/q.png" alt="Queen of Diamonds"></div>
+                <div class="card-slot" onclick="showCardDetails('dk')"><img src="assets/cards/diamond/k.png" alt="King of Diamonds"></div>
+                
+                <div class="card-slot card-big" onclick="showCardDetails('d_ace')">
+                  <img src="assets/cards/diamond/ace.png" alt="Ace of Diamonds">
+                </div>
+              </div>
+            </div>
+      
+            <div class="card-family-section">
+              <h3>Hearts ♥️</h3>
+              <div class="cards-grid">
+                <div class="card-slot" onclick="showCardDetails('h2')"><img src="assets/cards/heart/2.png" alt="2 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('h3')"><img src="assets/cards/heart/3.png" alt="3 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('h4')"><img src="assets/cards/heart/4.png" alt="4 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('h5')"><img src="assets/cards/heart/5.png" alt="5 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('h6')"><img src="assets/cards/heart/6.png" alt="6 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('h7')"><img src="assets/cards/heart/7.png" alt="7 of Hearts"></div>
+                
+                <div class="card-slot" onclick="showCardDetails('h8')"><img src="assets/cards/heart/8.png" alt="8 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('h9')"><img src="assets/cards/heart/9.png" alt="9 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('h10')"><img src="assets/cards/heart/10.png" alt="10 of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('hj')"><img src="assets/cards/heart/j.png" alt="Jack of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('hq')"><img src="assets/cards/heart/q.png" alt="Queen of Hearts"></div>
+                <div class="card-slot" onclick="showCardDetails('hk')"><img src="assets/cards/heart/k.png" alt="King of Hearts"></div>
+                
+                <div class="card-slot card-big" onclick="showCardDetails('h_ace')">
+                  <img src="assets/cards/heart/ace.png" alt="Ace of Hearts">
+                </div>
+              </div>
+            </div>
+      
+            <div class="card-family-section">
+              <h3>Clubs ♣️</h3>
+              <div class="cards-grid">
+                <div class="card-slot" onclick="showCardDetails('c2')"><img src="assets/cards/club/2.png" alt="2 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('c3')"><img src="assets/cards/club/3.png" alt="3 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('c4')"><img src="assets/cards/club/4.png" alt="4 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('c5')"><img src="assets/cards/club/5.png" alt="5 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('c6')"><img src="assets/cards/club/6.png" alt="6 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('c7')"><img src="assets/cards/club/7.png" alt="7 of Clubs"></div>
+                
+                <div class="card-slot" onclick="showCardDetails('c8')"><img src="assets/cards/club/8.png" alt="8 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('c9')"><img src="assets/cards/club/9.png" alt="9 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('c10')"><img src="assets/cards/club/10.png" alt="10 of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('cj')"><img src="assets/cards/club/j.png" alt="Jack of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('cq')"><img src="assets/cards/club/q.png" alt="Queen of Clubs"></div>
+                <div class="card-slot" onclick="showCardDetails('ck')"><img src="assets/cards/club/k.png" alt="King of Clubs"></div>
+                
+                <div class="card-slot card-big" onclick="showCardDetails('c_ace')">
+                  <img src="assets/cards/club/ace.png" alt="Ace of Clubs">
+                </div>
+              </div>
+            </div>
+      
+          </div>
+      
+          <div class="cardroom-right-panel" id="cardDetailsPanel">
+            <h3>Statistiques de la carte</h3>
+            
+            <div class="selected-img-wrapper">
+              <img id="selectedCardImg" src="" alt="Selected Card">
+            </div>
+            
+            <h4 id="selectedCardTitle">Click a card</h4>
+            <p id="selectedCardDesc">Select a card from the left to view its stats and description.</p>
+            
+            <button id="cardBuyBtn" class="cardBuyBtn" onclick="buySelectedCard()">Buy Card</button>
+          </div>
+        </div>
+      </div>
+ 
+
+
+
+    </div>
+
+    <div id="settings" class="tab-content">
+      <h2>Paramètres</h2>
+      <button onclick="resetGame()" style="background-color: #ff4d4d; color: white;">Reset Game</button>
+      <p>Attention : cette action effacera toute votre progression.</p>
+    </div>
+
+    <script src="cardsData.js" charset="utf-8" type="text/javascript"></script>
+    <script src="main.js" charset="utf-8" type="text/javascript"></script>
+  </body>
+</html>
