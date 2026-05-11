@@ -20,7 +20,7 @@
         <button class="tab-button active-btn" onclick="openTab('casino')">
             <img src="assets/icons/casino_tab_icon.png" alt="Casino Icon" class="tab-icon"> Casino
         </button>
-
+        <button class="tab-button" onclick="openTab('achievements')">Achievements</button>
         <button class="tab-button" onclick="openTab('settings')">Settings</button>
     </div>
 
@@ -235,8 +235,46 @@
 
     </div>
 
+    <div id="achievements" class="tab-content">
+      <h2>Achievements</h2>
+      <div class="achievements-grid" id="achievementsGrid">
+        <div class="achievement-card locked" id="ach_first_cherry">
+          <div class="ach-icon">🍒</div>
+          <div class="ach-info">
+            <div class="ach-title">First Harvest</div>
+            <div class="ach-desc">Buy 1 Cherry.</div>
+          </div>
+        </div>
+    
+        <div class="achievement-card locked" id="ach_millionaire">
+          <div class="ach-icon">💰</div>
+          <div class="ach-info">
+            <div class="ach-title">Millionaire</div>
+            <div class="ach-desc">Have 1,000,000 Chips.</div>
+          </div>
+        </div>
+        
+        <div class="achievement-card locked" id="ach_collector">
+          <div class="ach-icon">🃏</div>
+          <div class="ach-info">
+            <div class="ach-title">Card Collector</div>
+            <div class="ach-desc">Own 5 different cards.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="settings" class="tab-content">
       <h2>Paramètres</h2>
+
+      <div style="margin-bottom: 20px;">
+        <button onclick="exportSave()" style="background-color: #2ecc71; color: white;">💾 Export Save to File</button>
+        
+        <button onclick="document.getElementById('importFile').click()" style="background-color: #3498db; color: white;">📂 Import Save from File</button>
+        <input type="file" id="importFile" style="display: none;" onchange="importSave(event)">
+      </div>
+
+
       <button onclick="resetGame()" style="background-color: #ff4d4d; color: white;">Reset Game</button>
       <p>Attention : cette action effacera toute votre progression.</p>
     </div>

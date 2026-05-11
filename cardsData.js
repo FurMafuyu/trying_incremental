@@ -1,6 +1,6 @@
 var cardsData = {
     spades: [
-      { id: "s2", title: "2 of Spades", img: "assets/cards/spade/2.png", desc: "Unlocks machine cogs", cost: 2500 },
+      { id: "s2", title: "2 of Spades", img: "assets/cards/spade/2.png", desc: "First of many", cost: 75000 },
       { id: "s3", title: "3 of Spades", img: "assets/cards/spade/3.png", desc: "A solid choice.", cost: 0 },
       { id: "s4", title: "4 of Spades", img: "assets/cards/spade/4.png", desc: "Perfect for a full set.", cost: 0 },
       { id: "s5", title: "5 of Spades", img: "assets/cards/spade/5.png", desc: "Increases card income.", cost: 0 },

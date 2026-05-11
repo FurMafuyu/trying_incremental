@@ -403,3 +403,54 @@ h1 {
   }
 }
 
+/* Achievements */
+.tab-container.achievements-tab {
+  border-bottom-color: #621a8f;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.achievement-card {
+  display: flex;
+  align-items: center;
+  background: #1e1e1e;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+}
+
+/* État verrouillé (Grisé) */
+.achievement-card.locked {
+  filter: grayscale(100%) brightness(0.5);
+  opacity: 0.7;
+}
+
+/* État débloqué (Brillant) */
+.achievement-card.unlocked {
+  border-color: #f1c40f;
+  box-shadow: 0 0 10px rgba(241, 196, 15, 0.2);
+  filter: none;
+  opacity: 1;
+}
+
+.ach-icon {
+  font-size: 2rem;
+  margin-right: 15px;
+}
+
+.ach-title {
+  color: #f1c40f;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.ach-desc {
+  font-size: 0.8rem;
+  color: #bbb;
+}

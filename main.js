@@ -15,7 +15,7 @@ var gameData = {
 
   horseshoeLvl: 0,
   horseshoeBonusAmount: 0,
-  horseshoeCost: 80000,
+  horseshoeCost: 100000,
 
   luckySevenLvl: 0,
   luckySevenBonusAmount: 0,
@@ -30,6 +30,7 @@ var gameData = {
 };
 
 var purchasedCards = [];
+var unlockedAchievements = [];
 
 function formatScientifique(valeur) {
   if (valeur === 0) return "0.00e00";
@@ -72,6 +73,8 @@ function openTab(tabName) {
     tabContainer.className = "tab-container casino-tab";
   } else if (tabName === 'settings') {
     tabContainer.className = "tab-container settings-tab";
+  } else if (tabName === 'achievements') {
+    tabContainer.className = "tab-container achievements-tab";
   }
 }
 
@@ -106,6 +109,7 @@ var revenues = {
 
 function chipsRevenues() {
   // cherry base : 1 cherry = 1 C/s
+  if (purchasedCards.includes('s2')) {gameData.cherryBonusAmount = gameData.lemonLvl}
   revenues.cherryCps = (gameData.cherryBonusAmount + gameData.cherryLvl) * 1;
 
   // lemon base : 1 lemon = 10 C/s
@@ -161,7 +165,7 @@ function updateUI() {
 }
 
 function updateButtons() {
-  if (purchasedCards.includes('s2')) { document.getElementById("cogsSlot").style.display = "block"; }
+  if (purchasedCards.includes('s3')) { document.getElementById("cogsSlot").style.display = "block"; }
 }
 
 // Casino hall buyers
@@ -169,7 +173,7 @@ function buyCherry() {
   if (gameData.chips >= gameData.cherryCost) {
     gameData.chips -= gameData.cherryCost;
     gameData.cherryLvl += 1;
-    gameData.cherryCost *= 1.2;
+    gameData.cherryCost *= 1.3;
     updateUI();
   }
 }
@@ -177,7 +181,7 @@ function buyLemon() {
   if (gameData.chips >= gameData.lemonCost) {
     gameData.chips -= gameData.lemonCost;
     gameData.lemonLvl += 1;
-    gameData.lemonCost *= 1.4;
+    gameData.lemonCost *= 1.6;
     updateUI();
   }
 }
@@ -185,7 +189,7 @@ function buyBell() {
   if (gameData.chips >= gameData.bellCost) {
     gameData.chips -= gameData.bellCost;
     gameData.bellLvl += 1;
-    gameData.bellCost *= 1.6;
+    gameData.bellCost *= 1.9;
     updateUI();
   }
 }
@@ -193,7 +197,7 @@ function buyHorseshoe() {
   if (gameData.chips >= gameData.horseshoeCost) {
     gameData.chips -= gameData.horseshoeCost;
     gameData.horseshoeLvl += 1;
-    gameData.horseshoeCost *= 1.8;
+    gameData.horseshoeCost *= 2.2;
     updateUI();
   }
 }
@@ -201,7 +205,7 @@ function buyLuckySeven() {
   if (gameData.chips >= gameData.luckySevenCost) {
     gameData.chips -= gameData.luckySevenCost;
     gameData.luckySevenLvl += 1;
-    gameData.luckySevenCost *= 2;
+    gameData.luckySevenCost *= 2.5;
     updateUI();
   }
 }
@@ -209,7 +213,7 @@ function buySpins() {
   if (gameData.chips >= gameData.spinsCost) {
     gameData.chips -= gameData.spinsCost;
     gameData.spinsLvl += 1;
-    gameData.spinsCost *= 2.2;
+    gameData.spinsCost *= 2.8;
     updateUI();
   }
 }
@@ -233,7 +237,7 @@ function resetGame() {
     
       horseshoeLvl: 0,
       horseshoeBonusAmount: 0,
-      horseshoeCost: 80000,
+      horseshoeCost: 100000,
     
       luckySevenLvl: 0,
       luckySevenBonusAmount: 0,
@@ -248,33 +252,116 @@ function resetGame() {
     };
 
     purchasedCards = [];
+    unlockedAchievements = [];
     
-    localStorage.removeItem("goldMinerSave");
+    localStorage.removeItem("gameDataSave");
+    localStorage.removeItem("purchasedCardsSave");
+    localStorage.removeItem("unlockedAchievementsSave");
+    
+    // 3. Reset Visuel des cartes (On les remet toutes en verrouillées)
+    var allCardSlots = document.querySelectorAll(".card-slot");
+    allCardSlots.forEach(function(slot) {
+      slot.classList.add("locked-card");
+    });
+
+    // 4. Reset Visuel des achievements
+    var allAchievements = document.querySelectorAll(".achievement-card");
+    allAchievements.forEach(function(ach) {
+        ach.classList.remove("unlocked");
+        ach.classList.add("locked");
+    });
+
     updateUI();
   }
 }
 
-// Boucles du jeu
+function checkAchievements() {
+  if (gameData.cherryLvl > 0) unlock("ach_first_cherry");
+  if (gameData.chips >= 1000000) unlock("ach_millionaire");
+  if (purchasedCards.length >= 5) unlock("ach_collector");
+}
+
+function unlock(id) {
+  if (!unlockedAchievements.includes(id)) {
+      unlockedAchievements.push(id);
+      console.log("Achievement Unlocked: " + id);
+  }
+  
+  let el = document.getElementById(id);
+  if (el) {
+      el.classList.remove("locked");
+      el.classList.add("unlocked");
+  }
+}
+
 var mainGameLoop = window.setInterval(function() {
-  // adding chips
   chipsRevenues();
   gameData.chips += (revenues.totalCps) * 0.1; // divided by 10
 
-  
+  checkAchievements();
   updateUI();
 }, 100);
 
 var saveGameLoop = window.setInterval(function() {
   localStorage.setItem("gameDataSave", JSON.stringify(gameData));
   localStorage.setItem("purchasedCardsSave", JSON.stringify(purchasedCards));
+  localStorage.setItem("unlockedAchievementsSave", JSON.stringify(unlockedAchievements));
 }, 15000);
 
 // Chargement
 var gamesave = JSON.parse(localStorage.getItem("gameDataSave"));
 var cardsave = JSON.parse(localStorage.getItem("purchasedCardsSave"));
+var achsave = JSON.parse(localStorage.getItem("unlockedAchievementsSave"));
 if (gamesave !== null && cardsave !== null) {
   gameData = gamesave;
   purchasedCards = cardsave;
+  unlockedAchievements = achsave;
+}
+
+function exportSave() {
+  localStorage.setItem("gameDataSave", JSON.stringify(gameData));
+  localStorage.setItem("purchasedCardsSave", JSON.stringify(purchasedCards));
+  localStorage.setItem("unlockedAchievementsSave", JSON.stringify(unlockedAchievements));
+  var fullSave = {
+      gameData: gameData,
+      purchasedCards: purchasedCards,
+      unlockedAchievements: unlockedAchievements
+  };
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullSave));
+  
+  var downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "furmafu_save_" + new Date().getTime() + ".json");
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+
+function importSave(event) {
+  var reader = new FileReader();
+  reader.onload = function(event) {
+      try {
+          var importedData = JSON.parse(event.target.result);
+          
+          if (importedData.gameData && importedData.purchasedCards && importedData.unlockedAchievements) {
+              gameData = importedData.gameData;
+              purchasedCards = importedData.purchasedCards;
+              unlockedAchievements = importedData.unlockedAchievements;
+
+              localStorage.setItem("gameDataSave", JSON.stringify(gameData));
+              localStorage.setItem("purchasedCardsSave", JSON.stringify(purchasedCards));
+              localStorage.setItem("unlockedAchievementsSave", JSON.stringify(unlockedAchievements));
+
+              alert("Save imported successfully!");
+              location.reload(); // On recharge pour être sûr que tout (visuels, boucles) reparte à zéro
+          } else {
+              alert("Invalid save file format.");
+          }
+      } catch (e) {
+          alert("Error reading file. Make sure it's a valid JSON.");
+      }
+  };
+  reader.readAsText(event.target.files[0]);
 }
 
 function showCardDetails(cardId) {
@@ -288,7 +375,6 @@ function showCardDetails(cardId) {
 
   if (panelTitle) {
     panelTitle.textContent = card.title;
-    // On enregistre correctement l'ID de la carte dans le dataset du titre
     panelTitle.dataset.cardId = card.id; 
   }
   if (panelImg) {
