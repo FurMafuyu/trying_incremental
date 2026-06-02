@@ -76,6 +76,8 @@ function openTab(tabName) {
   } else if (tabName === 'achievements') {
     tabContainer.className = "tab-container achievements-tab";
   }
+
+  checkBackground();
 }
 
 function openSubTab(subTabName) {
@@ -95,6 +97,36 @@ function openSubTab(subTabName) {
   if (typeof event !== 'undefined' && event.currentTarget) {
     event.currentTarget.classList.add("active-sub-btn");
   }
+
+  checkBackground();
+}
+
+function checkBackground() {
+  var casinoTab = document.getElementById("casino");
+  var hallSubTab = document.getElementById("hall");
+  var cardroomSubTab = document.getElementById("cardroom");
+  var settingsTab = document.getElementById("settings");
+  var achievementsTab = document.getElementById("achievements");
+
+  document.body.classList.remove("hall-bg-active");
+  document.body.classList.remove("cardroom-bg-active");
+  document.body.classList.remove("settings-bg-active");
+  document.body.classList.remove("achievements-bg-active");
+
+  if (casinoTab && casinoTab.classList.contains("active-tab")) {
+    if (hallSubTab && hallSubTab.classList.contains("active-sub-tab")) {
+      document.body.classList.add("hall-bg-active");
+    } 
+    else if (cardroomSubTab && cardroomSubTab.classList.contains("active-sub-tab")) {
+      document.body.classList.add("cardroom-bg-active");
+    }
+  } 
+  else if (settingsTab && settingsTab.classList.contains("active-tab")) {
+    document.body.classList.add("settings-bg-active");
+  } 
+  else if (achievementsTab && achievementsTab.classList.contains("active-tab")) {
+    document.body.classList.add("achievements-bg-active");
+  }
 }
 
 var revenues = {
@@ -109,7 +141,53 @@ var revenues = {
 
 function chipsRevenues() {
   // cherry base : 1 cherry = 1 C/s
-  if (purchasedCards.includes('s2')) {gameData.cherryBonusAmount = gameData.lemonLvl}
+  
+  if (gameData.lemonLvl > 0) 
+  {
+    if (purchasedCards.includes('s2')) gameData.lemonBonusAmount = gameData.cherryLvl
+  } 
+  else 
+  {
+  gameData.lemonBonusAmount=0 
+  }
+
+  if (gameData.bellLvl > 0)
+  {
+    if (purchasedCards.includes('s2')) gameData.bellBonusAmount = gameData.lemonLvl
+  } 
+  else 
+  {
+    gameData.bellBonusAmount=0 
+  }
+
+  if (gameData.horseshoeLvl > 0) 
+  {
+    gameData.horseshoeBonusAmount = gameData.bellLvl
+  } 
+  else 
+  { 
+    gameData.horseshoeBonusAmount=0 
+  }
+
+  if (gameData.luckySevenLvl > 0) 
+  {
+    gameData.luckySevenBonusAmount = gameData.horseshoeLvl
+  } 
+  else 
+  {
+    gameData.luckySevenBonusAmount=0
+  }
+
+  if (gameData.spinsLvl > 0) 
+  {
+    gameData.spinsBonusAmount = gameData.luckySevenLvl
+  } 
+  else 
+  {
+    gameData.spinsBonusAmount=0
+  }
+
+
   revenues.cherryCps = (gameData.cherryBonusAmount + gameData.cherryLvl) * 1;
 
   // lemon base : 1 lemon = 10 C/s
@@ -122,7 +200,7 @@ function chipsRevenues() {
   revenues.horseshoeCps = (gameData.horseshoeBonusAmount + gameData.horseshoeLvl) * 1000;
 
   // 7 base : 1x = 10 000 C/s
-  revenues.luckySevenCps = (gameData.luckySevenBonusAmount + gameData.horseshoeLvl) * 10000;
+  revenues.luckySevenCps = (gameData.luckySevenBonusAmount + gameData.luckySevenLvl) * 10000;
 
   // Spins base : 1x = 100 000 C/s
   revenues.spinsCps = (gameData.spinsBonusAmount + gameData.spinsLvl) * 100000;
@@ -421,3 +499,4 @@ function buySelectedCard() {
 
 updateButtons();
 updateUI();
+checkBackground();

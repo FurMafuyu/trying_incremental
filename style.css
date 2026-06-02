@@ -454,3 +454,39 @@ h1 {
   font-size: 0.8rem;
   color: #bbb;
 }
+
+body.hall-bg-active {
+  background-image: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.85)), 
+                    url('assets/bg/texture111.png');
+  background-repeat: repeat;
+  image-rendering: pixelated;
+  
+  background-size: 64px; 
+}
+
+body.settings-bg-active {
+  background-image: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.85)), 
+                    url('assets/bg/texture136.png');
+  background-repeat: repeat;
+  image-rendering: pixelated;
+  
+  background-size: 64px; 
+}
+
+body.cardroom-bg-active {
+  background-image: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.85)), 
+                    url('assets/bg/texture72.png');
+  background-repeat: repeat;
+  image-rendering: pixelated;
+  
+  background-size: 64px; 
+}
+
+body.achievements-bg-active {
+  background-image: linear-gradient(rgba(17, 17, 17, 0.45), rgba(17, 17, 17, 0.45)), 
+                    url('assets/bg/texture224.png');
+  background-repeat: repeat;
+  image-rendering: pixelated;
+  
+  background-size: 64px; 
+}
