@@ -153,7 +153,7 @@ function chipsRevenues() {
 
   if (gameData.bellLvl > 0)
   {
-    if (purchasedCards.includes('s2')) gameData.bellBonusAmount = gameData.lemonLvl
+    if (purchasedCards.includes('s3')) gameData.bellBonusAmount = gameData.lemonLvl
   } 
   else 
   {
@@ -214,31 +214,31 @@ function updateUI() {
   document.getElementById("statChips").innerHTML = formatNumber(gameData.chips);
   document.getElementById("statLevel").innerHTML = formatNumber(gameData.chipsPerClick || 1);
 
-  document.getElementById("chipsTotalProdText").textContent = "+" + revenues.totalCps;
+  document.getElementById("chipsTotalProdText").textContent = "+" + formatNumber(revenues.totalCps);
 
   document.getElementById("cherryLeft").textContent = formatNumber(gameData.cherryLvl) + '+[' + formatNumber(gameData.cherryBonusAmount) + ']';
   document.getElementById("cherryRight").textContent = '(' + formatNumber(gameData.cherryCost) + ' Chips)';
-  document.getElementById("cherryProdText").textContent = "+" + revenues.cherryCps + " Chips/s";
+  document.getElementById("cherryProdText").textContent = "+" + formatNumber(revenues.cherryCps) + " Chips/s";
 
   document.getElementById("lemonLeft").textContent = formatNumber(gameData.lemonLvl) + '+[' + formatNumber(gameData.lemonBonusAmount) + ']';
   document.getElementById("lemonRight").textContent = '(' + formatNumber(gameData.lemonCost) + ' Chips)';
-  document.getElementById("lemonProdText").textContent = "+" + revenues.lemonCps + " Chips/s";
+  document.getElementById("lemonProdText").textContent = "+" + formatNumber(revenues.lemonCps) + " Chips/s";
 
   document.getElementById("bellLeft").textContent = formatNumber(gameData.bellLvl) + '+[' + formatNumber(gameData.bellBonusAmount) + ']';
   document.getElementById("bellRight").textContent = '(' + formatNumber(gameData.bellCost) + ' Chips)';
-  document.getElementById("bellProdText").textContent = "+" + revenues.bellCps + " Chips/s";
+  document.getElementById("bellProdText").textContent = "+" + formatNumber(revenues.bellCps)+ " Chips/s";
 
   document.getElementById("horseshoeLeft").textContent = formatNumber(gameData.horseshoeLvl) + '+[' + formatNumber(gameData.horseshoeBonusAmount) + ']';
   document.getElementById("horseshoeRight").textContent = '(' + formatNumber(gameData.horseshoeCost) + ' Chips)';
-  document.getElementById("horseshoeProdText").textContent = "+" + revenues.horseshoeCps + " Chips/s";
+  document.getElementById("horseshoeProdText").textContent = "+" + formatNumber(revenues.horseshoeCps) + " Chips/s";
 
   document.getElementById("luckySevenLeft").textContent = formatNumber(gameData.luckySevenLvl) + '+[' + formatNumber(gameData.luckySevenBonusAmount) + ']';
   document.getElementById("luckySevenRight").textContent = '(' + formatNumber(gameData.luckySevenCost) + ' Chips)';
-  document.getElementById("luckySevenProdText").textContent = "+" + revenues.luckySevenCps + " Chips/s";
+  document.getElementById("luckySevenProdText").textContent = "+" + formatNumber(revenues.luckySevenCps) + " Chips/s";
 
   document.getElementById("spinsLeft").textContent = formatNumber(gameData.spinsLvl) + '+[' + formatNumber(gameData.spinsBonusAmount) + ']';
   document.getElementById("spinsRight").textContent = '(' + formatNumber(gameData.spinsCost) + ' Chips)';
-  document.getElementById("spinsProdText").textContent = "+" + revenues.spinsCps + " Chips/s";
+  document.getElementById("spinsProdText").textContent = "+" + formatNumber(revenues.spinsCps) + " Chips/s";
 
 }
 

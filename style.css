@@ -11,7 +11,7 @@ body {
   color: #ffffff;
 }
 
-/* En-tête des statistiques */
+/* Stats header */
 .header-stats {
   display: flex;
   justify-content: center;
@@ -24,7 +24,7 @@ body {
 }
 
 .stat-item {
-  color: #f1c40f;
+  color: #0ff180;
 }
 
 h1 {
@@ -34,9 +34,9 @@ h1 {
 /* Conteneur des onglets avec transition de couleur */
 .tab-container {
   margin: 0 auto;
-  border-bottom: 4px solid #f1c40f; /* Couleur par défaut (Casino/Miner) */
+  border-bottom: 4px solid #f1c40f;
   padding-bottom: 5px;
-  transition: border-color 0.3s ease; /* Transition de la couleur de la barre */
+  transition: border-color 0.3s ease;
 }
 
 /* Classes dynamiques pour changer la couleur de la barre */
@@ -261,19 +261,23 @@ h1 {
 }
 
 
-/* CARDROOM */
+
+
+/************
+ * CARDROOM *
+ ************/
+
 .cardroom-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 30px;
-  background-color: #2c2c2c; /* Boîte grise plus grande / distincte */
+  background-color: #2c2c2c;
   padding: 25px;
   border-radius: 6px;
   margin-top: 15px;
 }
 
-/* Grille pour les cartes (à gauche) */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr) 1.2fr;
@@ -281,13 +285,12 @@ h1 {
   gap: 12px;
   align-items: center;
   justify-items: center;
-  width: 85%; /* Occupe la majeure partie de l'espace à gauche */
+  width: 85%;
 }
 
-/* Agrandissement de la taille des cartes */
 .card-slot img {
   width: 100%;
-  max-width: 150px; /* Agrandit les cartes */
+  max-width: 150px;
   height: auto;
   border-radius: 6px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
@@ -296,7 +299,7 @@ h1 {
 
 .card-slot.locked-card img {
   filter: grayscale(100%) brightness(50%);
-  opacity: 0.6; /* Assombrit et désature la carte */
+  opacity: 0.6;
   cursor: pointer;
 }
 
@@ -304,19 +307,19 @@ h1 {
   transform: scale(1.08);
 }
 
-/* Carte As plus grande */
+/* Aces */
 .card-slot.card-big {
   grid-column: 7;
   grid-row: 1 / span 2;
 }
 
 .card-slot.card-big img {
-  max-width: 300px; /* L'As devient beaucoup plus grand */
+  max-width: 300px; 
 }
 
-/* Panneau latéral droit */
+
 .cardroom-right-panel {
-  width: 28%; /* Largeur fixe pour le panneau de droite */
+  width: 28%; 
   min-width: 260px;
   background-color: #1e1e1e;
   padding: 25px;
@@ -325,10 +328,9 @@ h1 {
   text-align: center;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0; /* Empêche le conteneur de rétrécir */
+  flex-shrink: 0;
 }
 
-/* Encapsulation de l'image pour bloquer l'espace (pas de décalage) */
 .selected-img-wrapper {
   height: 250px;
   display: flex;
@@ -384,7 +386,7 @@ h1 {
   background-color: #ffcc00;
 }
 
-/* Gestion responsive */
+/* responsive */
 @media (max-width: 768px) {
   .cardroom-container {
     flex-direction: column;
@@ -403,7 +405,10 @@ h1 {
   }
 }
 
-/* Achievements */
+
+/****************
+ * ACHIEVEMENTS *
+ ****************/
 .tab-container.achievements-tab {
   border-bottom-color: #621a8f;
 }
@@ -425,15 +430,13 @@ h1 {
   transition: all 0.3s ease;
 }
 
-/* État verrouillé (Grisé) */
 .achievement-card.locked {
   filter: grayscale(100%) brightness(0.5);
   opacity: 0.7;
 }
 
-/* État débloqué (Brillant) */
 .achievement-card.unlocked {
-  border-color: #f1c40f;
+  border-color: #f10fde;
   box-shadow: 0 0 10px rgba(241, 196, 15, 0.2);
   filter: none;
   opacity: 1;
@@ -445,7 +448,7 @@ h1 {
 }
 
 .ach-title {
-  color: #f1c40f;
+  color: #f1a20f;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -455,6 +458,11 @@ h1 {
   color: #bbb;
 }
 
+
+
+/***************
+ * BACKGROUNDS *
+ ***************/
 body.hall-bg-active {
   background-image: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.85)), 
                     url('assets/bg/texture111.png');
