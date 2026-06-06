@@ -7,11 +7,11 @@ var gameData = {
 
   lemonLvl: 0,
   lemonBonusAmount: 0,
-  lemonCost: 200,
+  lemonCost: 100,
 
   bellLvl: 0,
   bellBonusAmount: 0,
-  bellCost: 4000,
+  bellCost: 1000,
 
   horseshoeLvl: 0,
   horseshoeBonusAmount: 0,
@@ -25,8 +25,15 @@ var gameData = {
   spinsBonusAmount: 0,
   spinsCost: 666,
 
-  cogsLvl: 0,
-  cogsCost: 250
+  // Highrollers
+  vipTokens: 0,
+  
+  hr1Lvl: 0, hr1Cost: 10,       // Dealers
+  hr2Lvl: 0, hr2Cost: 100,      // Floor Managers
+  hr3Lvl: 0, hr3Cost: 1000,     // Pit bosses
+  hr4Lvl: 0, hr4Cost: 10000,    // Security Chiefs
+  hr5Lvl: 0, hr5Cost: 100000,   // Directors
+  hr6Lvl: 0, hr6Cost: 1000000   // Moguls
 };
 
 var purchasedCards = [];
@@ -105,12 +112,19 @@ function checkBackground() {
   var casinoTab = document.getElementById("casino");
   var hallSubTab = document.getElementById("hall");
   var cardroomSubTab = document.getElementById("cardroom");
+  var highrollersSubTab = document.getElementById("highrollers");
+
   var settingsTab = document.getElementById("settings");
+
   var achievementsTab = document.getElementById("achievements");
+
 
   document.body.classList.remove("hall-bg-active");
   document.body.classList.remove("cardroom-bg-active");
+  document.body.classList.remove("highrollers-bg-active");
+
   document.body.classList.remove("settings-bg-active");
+
   document.body.classList.remove("achievements-bg-active");
 
   if (casinoTab && casinoTab.classList.contains("active-tab")) {
@@ -120,7 +134,10 @@ function checkBackground() {
     else if (cardroomSubTab && cardroomSubTab.classList.contains("active-sub-tab")) {
       document.body.classList.add("cardroom-bg-active");
     }
-  } 
+    else if (highrollersSubTab && highrollersSubTab.classList.contains("active-sub-tab")) {
+      document.body.classList.add("highrollers-bg-active");
+    }
+  }
   else if (settingsTab && settingsTab.classList.contains("active-tab")) {
     document.body.classList.add("settings-bg-active");
   } 
@@ -130,13 +147,8 @@ function checkBackground() {
 }
 
 var revenues = {
-  cherryCps: 0,
-  lemonCps: 0,
-  bellCps: 0,
-  horseshoeCps: 0,
-  luckySevenCps: 0,
-  spinsCps: 0,
-  totalCps: 0
+  cherryCps: 0, lemonCps: 0, bellCps: 0, horseshoeCps: 0, luckySevenCps: 0, spinsCps: 0, totalCps: 0,
+  hr1Vps: 0, hr2Vps: 0, hr3Vps: 0, hr4Vps: 0, hr5Vps: 0, hr6Vps: 0, totalVps: 0
 };
 
 function chipsRevenues() {
@@ -162,7 +174,7 @@ function chipsRevenues() {
 
   if (gameData.horseshoeLvl > 0) 
   {
-    gameData.horseshoeBonusAmount = gameData.bellLvl
+    if (purchasedCards.includes('s4')) gameData.horseshoeBonusAmount = gameData.bellLvl
   } 
   else 
   { 
@@ -171,7 +183,7 @@ function chipsRevenues() {
 
   if (gameData.luckySevenLvl > 0) 
   {
-    gameData.luckySevenBonusAmount = gameData.horseshoeLvl
+    if (purchasedCards.includes('s5')) gameData.luckySevenBonusAmount = gameData.horseshoeLvl
   } 
   else 
   {
@@ -180,7 +192,7 @@ function chipsRevenues() {
 
   if (gameData.spinsLvl > 0) 
   {
-    gameData.spinsBonusAmount = gameData.luckySevenLvl
+    if (purchasedCards.includes('s6')) gameData.spinsBonusAmount = gameData.luckySevenLvl
   } 
   else 
   {
@@ -208,12 +220,19 @@ function chipsRevenues() {
   revenues.totalCps = (revenues.cherryCps + revenues.lemonCps + revenues.bellCps + revenues.horseshoeCps + revenues.luckySevenCps + revenues.spinsCps)
 }
 
-function updateUI() {
-  document.getElementById("currentChips").innerHTML = formatNumber(gameData.chips) + " Chips";
-  
-  document.getElementById("statChips").innerHTML = formatNumber(gameData.chips);
-  document.getElementById("statLevel").innerHTML = formatNumber(gameData.chipsPerClick || 1);
+function vipTokensRevenues() {
+  revenues.hr1Vps = gameData.hr1Lvl * 1;
+  revenues.hr2Vps = gameData.hr2Lvl * 10;
+  revenues.hr3Vps = gameData.hr3Lvl * 100;
+  revenues.hr4Vps = gameData.hr4Lvl * 1000;
+  revenues.hr5Vps = gameData.hr5Lvl * 10000;
+  revenues.hr6Vps = gameData.hr6Lvl * 100000;
+  revenues.totalVps = revenues.hr1Vps + revenues.hr2Vps + revenues.hr3Vps + revenues.hr4Vps + revenues.hr5Vps + revenues.hr6Vps;
+}
 
+function updateUI_chips() {
+  document.getElementById("currentChips").innerHTML = formatNumber(gameData.chips) + " 🟡 Chips";
+  document.getElementById("statChips").innerHTML = formatNumber(gameData.chips);
   document.getElementById("chipsTotalProdText").textContent = "+" + formatNumber(revenues.totalCps);
 
   document.getElementById("cherryLeft").textContent = formatNumber(gameData.cherryLvl) + '+[' + formatNumber(gameData.cherryBonusAmount) + ']';
@@ -239,61 +258,75 @@ function updateUI() {
   document.getElementById("spinsLeft").textContent = formatNumber(gameData.spinsLvl) + '+[' + formatNumber(gameData.spinsBonusAmount) + ']';
   document.getElementById("spinsRight").textContent = '(' + formatNumber(gameData.spinsCost) + ' Chips)';
   document.getElementById("spinsProdText").textContent = "+" + formatNumber(revenues.spinsCps) + " Chips/s";
+}
 
+function updateUI_highrollers() {
+  document.getElementById("currentVipTokens").innerHTML = formatNumber(gameData.vipTokens) + " 🔵 VIP Tokens";
+  document.getElementById("statVipTokens").innerHTML = formatNumber(gameData.vipTokens);
+  document.getElementById("vipTokensTotalProdText").textContent = "+" + formatNumber(revenues.totalVps);
+
+
+  document.getElementById("hrLeft1").textContent = formatNumber(gameData.hr1Lvl);
+  document.getElementById("hrRight1").textContent = '(' + formatNumber(gameData.hr1Cost) + ' VIP)';
+  document.getElementById("hrProdText1").textContent = "+" + formatNumber(revenues.hr1Vps) + " VIP/s";
+
+  document.getElementById("hrLeft2").textContent = formatNumber(gameData.hr2Lvl);
+  document.getElementById("hrRight2").textContent = '(' + formatNumber(gameData.hr2Cost) + ' VIP)';
+  document.getElementById("hrProdText2").textContent = "+" + formatNumber(revenues.hr2Vps) + " VIP/s";
+
+  document.getElementById("hrLeft3").textContent = formatNumber(gameData.hr3Lvl);
+  document.getElementById("hrRight3").textContent = '(' + formatNumber(gameData.hr3Cost) + ' VIP)';
+  document.getElementById("hrProdText3").textContent = "+" + formatNumber(revenues.hr3Vps) + " VIP/s";
+
+  document.getElementById("hrLeft4").textContent = formatNumber(gameData.hr4Lvl);
+  document.getElementById("hrRight4").textContent = '(' + formatNumber(gameData.hr4Cost) + ' VIP)';
+  document.getElementById("hrProdText4").textContent = "+" + formatNumber(revenues.hr4Vps) + " VIP/s";
+
+  document.getElementById("hrLeft5").textContent = formatNumber(gameData.hr5Lvl);
+  document.getElementById("hrRight5").textContent = '(' + formatNumber(gameData.hr5Cost) + ' VIP)';
+  document.getElementById("hrProdText5").textContent = "+" + formatNumber(revenues.hr5Vps) + " VIP/s";
+
+  document.getElementById("hrLeft6").textContent = formatNumber(gameData.hr6Lvl);
+  document.getElementById("hrRight6").textContent = '(' + formatNumber(gameData.hr6Cost) + ' VIP)';
+  document.getElementById("hrProdText6").textContent = "+" + formatNumber(revenues.hr6Vps) + " VIP/s";
+}
+
+function updateUI() {
+  updateUI_chips();
+  updateUI_highrollers();
 }
 
 function updateButtons() {
-  if (purchasedCards.includes('s3')) { document.getElementById("cogsSlot").style.display = "block"; }
+
 }
 
-// Casino hall buyers
-function buyCherry() {
-  if (gameData.chips >= gameData.cherryCost) {
-    gameData.chips -= gameData.cherryCost;
-    gameData.cherryLvl += 1;
-    gameData.cherryCost *= 1.3;
-    updateUI();
-  }
+function checkAchievements() {
+  if (gameData.cherryLvl > 0) unlock("ach_first_cherry");
+  if (gameData.chips >= 1000000) unlock("ach_millionaire");
+  if (purchasedCards.length >= 5) unlock("ach_collector");
 }
-function buyLemon() {
-  if (gameData.chips >= gameData.lemonCost) {
-    gameData.chips -= gameData.lemonCost;
-    gameData.lemonLvl += 1;
-    gameData.lemonCost *= 1.6;
-    updateUI();
-  }
-}
-function buyBell() {
-  if (gameData.chips >= gameData.bellCost) {
-    gameData.chips -= gameData.bellCost;
-    gameData.bellLvl += 1;
-    gameData.bellCost *= 1.9;
-    updateUI();
-  }
-}
-function buyHorseshoe() {
-  if (gameData.chips >= gameData.horseshoeCost) {
-    gameData.chips -= gameData.horseshoeCost;
-    gameData.horseshoeLvl += 1;
-    gameData.horseshoeCost *= 2.2;
-    updateUI();
-  }
-}
-function buyLuckySeven() {
-  if (gameData.chips >= gameData.luckySevenCost) {
-    gameData.chips -= gameData.luckySevenCost;
-    gameData.luckySevenLvl += 1;
-    gameData.luckySevenCost *= 2.5;
-    updateUI();
-  }
-}
-function buySpins() {
-  if (gameData.chips >= gameData.spinsCost) {
-    gameData.chips -= gameData.spinsCost;
-    gameData.spinsLvl += 1;
-    gameData.spinsCost *= 2.8;
-    updateUI();
-  }
+
+/**********
+ * BUYERS *
+ **********/
+function buyCherry() { if (gameData.chips >= gameData.cherryCost) { gameData.chips -= gameData.cherryCost; gameData.cherryLvl += 1; gameData.cherryCost *= 1.3; updateUI(); } }
+function buyLemon() { if (gameData.chips >= gameData.lemonCost) { gameData.chips -= gameData.lemonCost; gameData.lemonLvl += 1; gameData.lemonCost *= 1.6; updateUI(); } }
+function buyBell() { if (gameData.chips >= gameData.bellCost) { gameData.chips -= gameData.bellCost; gameData.bellLvl += 1; gameData.bellCost *= 1.9; updateUI(); } }
+function buyHorseshoe() { if (gameData.chips >= gameData.horseshoeCost) { gameData.chips -= gameData.horseshoeCost; gameData.horseshoeLvl += 1; gameData.horseshoeCost *= 2.2; updateUI(); } }
+function buyLuckySeven() { if (gameData.chips >= gameData.luckySevenCost) { gameData.chips -= gameData.luckySevenCost; gameData.luckySevenLvl += 1; gameData.luckySevenCost *= 2.5; updateUI(); } }
+function buySpins() { if (gameData.chips >= gameData.spinsCost) { gameData.chips -= gameData.spinsCost; gameData.spinsLvl += 1; gameData.spinsCost *= 2.8; updateUI(); } }
+
+function buyCherryMax() { while(gameData.chips >= gameData.cherryCost) { buyCherry(); } }
+function buyLemonMax() { while(gameData.chips >= gameData.lemonCost) { buyLemon(); } }
+
+function buyHR(id) {
+  if (id === 1 && gameData.vipTokens >= gameData.hr1Cost) { gameData.vipTokens -= gameData.hr1Cost; gameData.hr1Lvl++; gameData.hr1Cost *= 1.3; }
+  if (id === 2 && gameData.vipTokens >= gameData.hr2Cost) { gameData.vipTokens -= gameData.hr2Cost; gameData.hr2Lvl++; gameData.hr2Cost *= 1.6; }
+  if (id === 3 && gameData.vipTokens >= gameData.hr3Cost) { gameData.vipTokens -= gameData.hr3Cost; gameData.hr3Lvl++; gameData.hr3Cost *= 1.9; }
+  if (id === 4 && gameData.vipTokens >= gameData.hr4Cost) { gameData.vipTokens -= gameData.hr4Cost; gameData.hr4Lvl++; gameData.hr4Cost *= 2.2; }
+  if (id === 5 && gameData.vipTokens >= gameData.hr5Cost) { gameData.vipTokens -= gameData.hr5Cost; gameData.hr5Lvl++; gameData.hr5Cost *= 2.5; }
+  if (id === 6 && gameData.vipTokens >= gameData.hr6Cost) { gameData.vipTokens -= gameData.hr6Cost; gameData.hr6Lvl++; gameData.hr6Cost *= 2.8; }
+  updateUI();
 }
 
 function resetGame() {
@@ -307,11 +340,11 @@ function resetGame() {
     
       lemonLvl: 0,
       lemonBonusAmount: 0,
-      lemonCost: 200,
+      lemonCost: 100,
     
       bellLvl: 0,
       bellBonusAmount: 0,
-      bellCost: 4000,
+      bellCost: 1000,
     
       horseshoeLvl: 0,
       horseshoeBonusAmount: 0,
@@ -325,9 +358,16 @@ function resetGame() {
       spinsBonusAmount: 0,
       spinsCost: 666,
     
-      cogsLvl: 0,
-      cogsCost: 250
-    };
+      // Highrollers
+      vipTokens: 0,
+      
+      hr1Lvl: 0, hr1Cost: 10,       // Dealers
+      hr2Lvl: 0, hr2Cost: 100,      // Floor Managers
+      hr3Lvl: 0, hr3Cost: 1000,     // Pit bosses
+      hr4Lvl: 0, hr4Cost: 10000,    // Security Chiefs
+      hr5Lvl: 0, hr5Cost: 100000,   // Directors
+      hr6Lvl: 0, hr6Cost: 1000000   // Moguls
+    };;
 
     purchasedCards = [];
     unlockedAchievements = [];
@@ -353,11 +393,7 @@ function resetGame() {
   }
 }
 
-function checkAchievements() {
-  if (gameData.cherryLvl > 0) unlock("ach_first_cherry");
-  if (gameData.chips >= 1000000) unlock("ach_millionaire");
-  if (purchasedCards.length >= 5) unlock("ach_collector");
-}
+
 
 function unlock(id) {
   if (!unlockedAchievements.includes(id)) {
@@ -374,7 +410,10 @@ function unlock(id) {
 
 var mainGameLoop = window.setInterval(function() {
   chipsRevenues();
+  vipTokensRevenues();
+
   gameData.chips += (revenues.totalCps) * 0.1; // divided by 10
+  gameData.vipTokens += (revenues.totalVps) * 0.1; 
 
   checkAchievements();
   updateUI();
@@ -497,6 +536,6 @@ function buySelectedCard() {
 }
 
 
-updateButtons();
-updateUI();
-checkBackground();
+//updateButtons();
+//updateUI();
+//checkBackground();

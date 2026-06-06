@@ -9,9 +9,20 @@
 
   <body>
 
+    <div id="titleScreen" class="title-screen">
+      <div class="title-content">
+        <h1 class="title-logo">Furmafu</h1>
+        <p class="title-subtitle">description</p>
+        <div class="title-buttons">
+          <button id="titleContinueBtn" class="title-btn continue-btn" onclick="titleScreenAction('continue')">Continue</button>
+          <button class="title-btn load-game-btn" onclick="titleScreenAction('Load')">Load</button>
+        </div>
+      </div>
+    </div>
+
     <div class="header-stats">
-        <span class="stat-item">💰 Chips: <span id="statChips">0</span></span>
-        <span class="stat-item">⚡ Level: <span id="statLevel">1</span></span>
+        <span class="stat-item">🟡 Chips: <span id="statChips">0</span></span>
+        <span class="stat-item">🔵 VIP Tokens: <span id="statVipTokens">0</span></span>
     </div>
 
     <h1>Furmafu</h1>
@@ -27,8 +38,9 @@
     <div id="casino" class="tab-content active-tab">
       
       <div class="subtab-container">
-        <button class="subtab-button active-sub-btn" onclick="openSubTab('hall')">Hall</button>
+        <button class="subtab-button active-sub-btn" onclick="openSubTab('hall')">Slot machine</button>
         <button class="subtab-button" onclick="openSubTab('cardroom')">Card room</button>
+        <button class="subtab-button" onclick="openSubTab('highrollers')">High rollers</button>
       </div>
  
       <div id="hall" class="subtab-content active-sub-tab">
@@ -37,90 +49,94 @@
           <span class="header-production-text"><span id="chipsTotalProdText">+0.00</span> Chips/s</span>
         </div>
          
-        <div class="action-grid">
-          <div class="action-item-wrapper">
-            <button class="left-action-btn" onclick="buyCherryMax()">Max</button>
-        
-            <button class="hall-buy-btn" onclick="buyCherry()" id="cherrySlot">
-              <span class="btn-left" id="cherryLeft">a + [b]</span>
-              <span class="btn-middle">🍒 Cherries</span>
-              <span class="btn-right" id="cherryRight">(c Chips)</span>
-            </button>
-        
-            <span class="side-prod-text" id="cherryProdText">+0.00/s</span>
-          </div>
-        
-          <div class="action-item-wrapper">
-            <button class="left-action-btn" onclick="buyLemonMax()">Max</button>
-            
-            <button class="hall-buy-btn" onclick="buyLemon()" id="lemonSlot">
-              <span class="btn-left" id="lemonLeft">a + [b]</span>
-              <span class="btn-middle">🍋 Lemons</span>
-              <span class="btn-right" id="lemonRight">(c Chips)</span>
-            </button>
-            <span class="side-prod-text" id="lemonProdText">+0.00/s</span>
-          </div>
+        <div class="hall-main-layout">
+    
+          <div class="action-grid">
+            <div class="action-item-wrapper">
+              <button class="left-action-btn" onclick="buyCherryMax()">Max</button>
+              <button class="hall-buy-btn" onclick="buyCherry()" id="cherrySlot">
+                <span class="btn-left" id="cherryLeft">a + [b]</span>
+                <span class="btn-middle">🍒 Cherries</span>
+                <span class="btn-right" id="cherryRight">(c Chips)</span>
+              </button>
+              <span class="side-prod-text" id="cherryProdText">+0.00/s</span>
+            </div>
           
-          <div class="action-item-wrapper">
-            <button class="left-action-btn"></button>
-            <button class="hall-buy-btn" onclick="buyBell()" id="bellSlot">
-              <span class="btn-left" id="bellLeft">a + b</span>
-              <span class="btn-middle">🔔 Bells</span>
-              <span class="btn-right" id="bellRight">c</span>
-            </button>
-            <span class="side-prod-text" id="bellProdText">+0.00/s</span>
+            <div class="action-item-wrapper">
+              <button class="left-action-btn" onclick="buyLemonMax()">Max</button>
+              <button class="hall-buy-btn" onclick="buyLemon()" id="lemonSlot">
+                <span class="btn-left" id="lemonLeft">a + [b]</span>
+                <span class="btn-middle">🍋 Lemons</span>
+                <span class="btn-right" id="lemonRight">(c Chips)</span>
+              </button>
+              <span class="side-prod-text" id="lemonProdText">+0.00/s</span>
+            </div>
+            
+            <div class="action-item-wrapper">
+              <button class="left-action-btn"></button>
+              <button class="hall-buy-btn" onclick="buyBell()" id="bellSlot">
+                <span class="btn-left" id="bellLeft">a + b</span>
+                <span class="btn-middle">🔔 Bells</span>
+                <span class="btn-right" id="bellRight">c</span>
+              </button>
+              <span class="side-prod-text" id="bellProdText">+0.00/s</span>
+            </div>
+          
+            <div class="action-item-wrapper">
+              <button class="left-action-btn"></button>
+              <button class="hall-buy-btn" onclick="buyHorseshoe()" id="horseshoeSlot">
+                <span class="btn-left" id="horseshoeLeft">a + b</span>
+                <span class="btn-middle">🧲 Horseshoes</span>
+                <span class="btn-right" id="horseshoeRight">c</span>
+              </button>
+              <span class="side-prod-text" id="horseshoeProdText">0/s</span>
+            </div>
+          
+            <div class="action-item-wrapper">
+              <button class="left-action-btn"></button>
+              <button class="hall-buy-btn" onclick="buyLuckySeven()" id="luckySevenSlot">
+                <span class="btn-left" id="luckySevenLeft">a + b</span>
+                <span class="btn-middle">7️⃣ Lucky Sevens</span>
+                <span class="btn-right" id="luckySevenRight">c</span>
+              </button>
+              <span class="side-prod-text" id="luckySevenProdText">0/s</span>
+            </div>
+          
+            <div class="action-item-wrapper">
+              <button class="left-action-btn"></button>
+              <button class="hall-buy-btn" onclick="buySpins()" id="spinsSlot">
+                <span class="btn-left" id="spinsLeft">a + b</span>
+                <span class="btn-middle">💈 Spins</span>
+                <span class="btn-right" id="spinsRight">c</span>
+              </button>
+              <span class="side-prod-text" id="spinsProdText">0/s</span>
+            </div>
+      
+            <div class="action-item-wrapper hidden-btn" id="cogsSlot">
+              <button class="left-action-btn"></button>
+              <button class="hall-buy-btn">
+                <span class="btn-left"></span>
+                <span class="btn-middle">Cogs</span>
+                <span class="btn-right"></span>
+              </button>
+              <span class="side-prod-text"></span>
+            </div>
           </div>
-        
-          <div class="action-item-wrapper">
-            <button class="left-action-btn"></button>
-            <button class="hall-buy-btn" onclick="buyHorseshoe()" id="horseshoeSlot">
-              <span class="btn-left" id="horseshoeLeft">a + b</span>
-              <span class="btn-middle">🧲 Horseshoes</span>
-              <span class="btn-right" id="horseshoeRight">c</span>
-            </button>
-            <span class="side-prod-text" id="horseshoeProdText">0/s</span>
+      
+          <div id="prestigePanel" class="prestige-panel" style="display: none;">
+            <h3>Promote to VIP</h3>
+            <p class="prestige-gain-text">Gain: <span id="prestigeVipGain">0</span> 🔵 VIP Tokens</p>
+            <button class="prestige-btn" onclick="triggerPrestige()">OK</button>
+            <p class="prestige-warning">Resets: Chips, Slot machine levels, and Spades cards ♠️</p>
           </div>
-        
-          <div class="action-item-wrapper">
-            <button class="left-action-btn"></button>
-            <button class="hall-buy-btn" onclick="buyLuckySeven()" id="luckySevenSlot">
-              <span class="btn-left" id="luckySevenLeft">a + b</span>
-              <span class="btn-middle">7️⃣ Lucky Sevens</span>
-              <span class="btn-right" id="luckySevenRight">c</span>
-            </button>
-            <span class="side-prod-text" id="luckySevenProdText">0/s</span>
-          </div>
-        
-          <div class="action-item-wrapper">
-            <button class="left-action-btn"></button>
-            <button class="hall-buy-btn" onclick="buySpins()" id="spinsSlot">
-              <span class="btn-left" id="spinsLeft">a + b</span>
-              <span class="btn-middle">💈 Spins</span>
-              <span class="btn-right" id="spinsRight">c</span>
-            </button>
-            <span class="side-prod-text" id="spinsProdText">0/s</span>
-          </div>
-
-          <div class="action-item-wrapper hidden-btn" id="cogsSlot">
-            <button class="left-action-btn"></button>
-            <button class="hall-buy-btn">
-              <span class="btn-left"></span>
-              <span class="btn-middle">Cogs</span>
-              <span class="btn-right"></span>
-            </button>
-            <span class="side-prod-text"></span>
-          </div>
-
-
+      
         </div>
       </div>
 
       <div id="cardroom" class="subtab-content">
         <h2>Card Room</h2>
-      
         <div class="cardroom-container">
           <div class="cardroom-left-wrapper">
-            
             <div class="card-family-section">
               <h3>Spades ♠️</h3>
               <div class="cards-grid">
@@ -130,20 +146,16 @@
                 <div class="card-slot" onclick="showCardDetails('s5')"><img src="assets/cards/spade/5.png" alt="5 of Spades"></div>
                 <div class="card-slot" onclick="showCardDetails('s6')"><img src="assets/cards/spade/6.png" alt="6 of Spades"></div>
                 <div class="card-slot" onclick="showCardDetails('s7')"><img src="assets/cards/spade/7.png" alt="7 of Spades"></div>
-                
                 <div class="card-slot" onclick="showCardDetails('s8')"><img src="assets/cards/spade/8.png" alt="8 of Spades"></div>
                 <div class="card-slot" onclick="showCardDetails('s9')"><img src="assets/cards/spade/9.png" alt="9 of Spades"></div>
                 <div class="card-slot" onclick="showCardDetails('s10')"><img src="assets/cards/spade/10.png" alt="10 of Spades"></div>
                 <div class="card-slot" onclick="showCardDetails('sj')"><img src="assets/cards/spade/j.png" alt="Jack of Spades"></div>
                 <div class="card-slot" onclick="showCardDetails('sq')"><img src="assets/cards/spade/q.png" alt="Queen of Spades"></div>
                 <div class="card-slot" onclick="showCardDetails('sk')"><img src="assets/cards/spade/k.png" alt="King of Spades"></div>
-                
-                <div class="card-slot card-big" onclick="showCardDetails('s_ace')">
-                  <img src="assets/cards/spade/ace.png" alt="Ace of Spades">
-                </div>
+                <div class="card-slot card-big" onclick="showCardDetails('s_ace')"><img src="assets/cards/spade/ace.png" alt="Ace of Spades"></div>
               </div>
             </div>
-      
+            <!-- Diamonds, Hearts, Clubs... restent identiques à ton index_9.html -->
             <div class="card-family-section">
               <h3>Diamonds ♦️</h3>
               <div class="cards-grid">
@@ -153,20 +165,15 @@
                 <div class="card-slot" onclick="showCardDetails('d5')"><img src="assets/cards/diamond/5.png" alt="5 of Diamonds"></div>
                 <div class="card-slot" onclick="showCardDetails('d6')"><img src="assets/cards/diamond/6.png" alt="6 of Diamonds"></div>
                 <div class="card-slot" onclick="showCardDetails('d7')"><img src="assets/cards/diamond/7.png" alt="7 of Diamonds"></div>
-                
                 <div class="card-slot" onclick="showCardDetails('d8')"><img src="assets/cards/diamond/8.png" alt="8 of Diamonds"></div>
                 <div class="card-slot" onclick="showCardDetails('d9')"><img src="assets/cards/diamond/9.png" alt="9 of Diamonds"></div>
                 <div class="card-slot" onclick="showCardDetails('d10')"><img src="assets/cards/diamond/10.png" alt="10 of Diamonds"></div>
                 <div class="card-slot" onclick="showCardDetails('dj')"><img src="assets/cards/diamond/j.png" alt="Jack of Diamonds"></div>
                 <div class="card-slot" onclick="showCardDetails('dq')"><img src="assets/cards/diamond/q.png" alt="Queen of Diamonds"></div>
                 <div class="card-slot" onclick="showCardDetails('dk')"><img src="assets/cards/diamond/k.png" alt="King of Diamonds"></div>
-                
-                <div class="card-slot card-big" onclick="showCardDetails('d_ace')">
-                  <img src="assets/cards/diamond/ace.png" alt="Ace of Diamonds">
-                </div>
+                <div class="card-slot card-big" onclick="showCardDetails('d_ace')"><img src="assets/cards/diamond/ace.png" alt="Ace of Diamonds"></div>
               </div>
             </div>
-      
             <div class="card-family-section">
               <h3>Hearts ♥️</h3>
               <div class="cards-grid">
@@ -176,20 +183,15 @@
                 <div class="card-slot" onclick="showCardDetails('h5')"><img src="assets/cards/heart/5.png" alt="5 of Hearts"></div>
                 <div class="card-slot" onclick="showCardDetails('h6')"><img src="assets/cards/heart/6.png" alt="6 of Hearts"></div>
                 <div class="card-slot" onclick="showCardDetails('h7')"><img src="assets/cards/heart/7.png" alt="7 of Hearts"></div>
-                
                 <div class="card-slot" onclick="showCardDetails('h8')"><img src="assets/cards/heart/8.png" alt="8 of Hearts"></div>
                 <div class="card-slot" onclick="showCardDetails('h9')"><img src="assets/cards/heart/9.png" alt="9 of Hearts"></div>
                 <div class="card-slot" onclick="showCardDetails('h10')"><img src="assets/cards/heart/10.png" alt="10 of Hearts"></div>
                 <div class="card-slot" onclick="showCardDetails('hj')"><img src="assets/cards/heart/j.png" alt="Jack of Hearts"></div>
                 <div class="card-slot" onclick="showCardDetails('hq')"><img src="assets/cards/heart/q.png" alt="Queen of Hearts"></div>
                 <div class="card-slot" onclick="showCardDetails('hk')"><img src="assets/cards/heart/k.png" alt="King of Hearts"></div>
-                
-                <div class="card-slot card-big" onclick="showCardDetails('h_ace')">
-                  <img src="assets/cards/heart/ace.png" alt="Ace of Hearts">
-                </div>
+                <div class="card-slot card-big" onclick="showCardDetails('h_ace')"><img src="assets/cards/heart/ace.png" alt="Ace of Hearts"></div>
               </div>
             </div>
-      
             <div class="card-family-section">
               <h3>Clubs ♣️</h3>
               <div class="cards-grid">
@@ -199,39 +201,92 @@
                 <div class="card-slot" onclick="showCardDetails('c5')"><img src="assets/cards/club/5.png" alt="5 of Clubs"></div>
                 <div class="card-slot" onclick="showCardDetails('c6')"><img src="assets/cards/club/6.png" alt="6 of Clubs"></div>
                 <div class="card-slot" onclick="showCardDetails('c7')"><img src="assets/cards/club/7.png" alt="7 of Clubs"></div>
-                
                 <div class="card-slot" onclick="showCardDetails('c8')"><img src="assets/cards/club/8.png" alt="8 of Clubs"></div>
                 <div class="card-slot" onclick="showCardDetails('c9')"><img src="assets/cards/club/9.png" alt="9 of Clubs"></div>
                 <div class="card-slot" onclick="showCardDetails('c10')"><img src="assets/cards/club/10.png" alt="10 of Clubs"></div>
                 <div class="card-slot" onclick="showCardDetails('cj')"><img src="assets/cards/club/j.png" alt="Jack of Clubs"></div>
                 <div class="card-slot" onclick="showCardDetails('cq')"><img src="assets/cards/club/q.png" alt="Queen of Clubs"></div>
                 <div class="card-slot" onclick="showCardDetails('ck')"><img src="assets/cards/club/k.png" alt="King of Clubs"></div>
-                
-                <div class="card-slot card-big" onclick="showCardDetails('c_ace')">
-                  <img src="assets/cards/club/ace.png" alt="Ace of Clubs">
-                </div>
+                <div class="card-slot card-big" onclick="showCardDetails('c_ace')"><img src="assets/cards/club/ace.png" alt="Ace of Clubs"></div>
               </div>
             </div>
-      
           </div>
       
           <div class="cardroom-right-panel" id="cardDetailsPanel">
             <h3>Card stats</h3>
-            
             <div class="selected-img-wrapper">
               <img id="selectedCardImg" src="" alt="Selected Card">
             </div>
-            
             <h4 id="selectedCardTitle">Click a card</h4>
             <p id="selectedCardDesc">Select a card from the left to view its stats and description.</p>
-            
             <button id="cardBuyBtn" class="cardBuyBtn" onclick="buySelectedCard()">Buy Card</button>
           </div>
         </div>
       </div>
  
-
-
+      <div id="highrollers" class="subtab-content">
+        <div class="chips-header-row">
+          <p id="currentVipTokens">0 VIP Token</p>
+          <span class="vipTokens-production-text"><span id="vipTokensTotalProdText">+0.00</span> VIP Tokens/s</span>
+        </div>
+          
+        <div class="action-grid">
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" id="hrSlot1" onclick="buyHR(1)">
+              <span class="btn-left" id="hrLeft1">0</span>
+              <span class="btn-middle">Dealers</span>
+              <span class="btn-right" id="hrRight1">(Cost)</span>
+            </button>
+            <span class="side-prod-text" id="hrProdText1">+0.00/s</span>
+          </div>
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" id="hrSlot2" onclick="buyHR(2)">
+              <span class="btn-left" id="hrLeft2">0</span>
+              <span class="btn-middle">Floor Managers</span>
+              <span class="btn-right" id="hrRight2">(Cost)</span>
+            </button>
+            <span class="side-prod-text" id="hrProdText2">+0.00/s</span>
+          </div>
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" id="hrSlot3" onclick="buyHR(3)">
+              <span class="btn-left" id="hrLeft3">0</span>
+              <span class="btn-middle">Pit bosses</span>
+              <span class="btn-right" id="hrRight3">(Cost)</span>
+            </button>
+            <span class="side-prod-text" id="hrProdText3">+0.00/s</span>
+          </div>
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" id="hrSlot4" onclick="buyHR(4)">
+              <span class="btn-left" id="hrLeft4">0</span>
+              <span class="btn-middle">Security Chiefs</span>
+              <span class="btn-right" id="hrRight4">(Cost)</span>
+            </button>
+            <span class="side-prod-text" id="hrProdText4">+0.00/s</span>
+          </div>
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" id="hrSlot5" onclick="buyHR(5)">
+              <span class="btn-left" id="hrLeft5">0</span>
+              <span class="btn-middle">Directors</span>
+              <span class="btn-right" id="hrRight5">(Cost)</span>
+            </button>
+            <span class="side-prod-text" id="hrProdText5">+0.00/s</span>
+          </div>
+          <div class="action-item-wrapper">
+            <button class="left-action-btn"></button>
+            <button class="hall-buy-btn" id="hrSlot6" onclick="buyHR(6)">
+              <span class="btn-left" id="hrLeft6">0</span>
+              <span class="btn-middle">Moguls</span>
+              <span class="btn-right" id="hrRight6">(Cost)</span>
+            </button>
+            <span class="side-prod-text" id="hrProdText6">+0.00/s</span>
+          </div>
+        </div>
+      </div>
 
     </div>
 
@@ -245,7 +300,6 @@
             <div class="ach-desc">Buy 1 Cherry.</div>
           </div>
         </div>
-    
         <div class="achievement-card locked" id="ach_millionaire">
           <div class="ach-icon">💰</div>
           <div class="ach-info">
@@ -253,7 +307,6 @@
             <div class="ach-desc">Have 1,000,000 Chips.</div>
           </div>
         </div>
-        
         <div class="achievement-card locked" id="ach_collector">
           <div class="ach-icon">🃏</div>
           <div class="ach-info">
@@ -265,21 +318,54 @@
     </div>
 
     <div id="settings" class="tab-content">
-      <h2>Paramètres</h2>
+      <h2>Settings</h2>
 
-      <div style="margin-bottom: 20px;">
-        <button onclick="exportSave()" style="background-color: #2ecc71; color: white;">💾 Export Save to File</button>
-        
-        <button onclick="document.getElementById('importFile').click()" style="background-color: #3498db; color: white;">📂 Import Save from File</button>
-        <input type="file" id="importFile" style="display: none;" onchange="importSave(event)">
+      <div class="subtab-container">
+        <button class="subtab-button active-sub-btn" onclick="openSubTab('settings-general')">General</button>
+        <button class="subtab-button" onclick="openSubTab('settings-credits')">Credits</button>
       </div>
 
+      <div id="settings-general" class="subtab-content active-sub-tab">
+        <div style="margin-bottom: 30px; border-bottom: 1px solid #444; padding-bottom: 20px;">
+          <button onclick="exportSave()" style="background-color: #2ecc71; color: white;">💾 Export Save to File</button>
+          <button onclick="document.getElementById('importFile').click()" style="background-color: #3498db; color: white;">📂 Import Save from File</button>
+          <input type="file" id="importFile" style="display: none;" onchange="importSave(event)">
+        </div>
 
-      <button onclick="resetGame()" style="background-color: #ff4d4d; color: white;">Reset Game</button>
-      <p>Attention : cette action effacera toute votre progression.</p>
+        <div style="margin-top: 40px;">
+          <button onclick="resetGame()" style="background-color: #ff4d4d; color: white;">Reset Game</button>
+          <p style="color: #bbb; font-size: 13px;">Warning! This will delete browser local storage and will reset the game.</p>
+        </div>
+      </div>
+
+      <div id="settings-credits" class="subtab-content">
+        <h1 class="credits-main-title">Credits</h1>
+    
+        <div class="credits-body-wrapper">
+            <h3>Developpers</h3>
+            <p>Furmafu</p>
+    
+            <h3>Music</h3>
+            <p>Undertale Yellow soundtrack</p>
+    
+            <h3>Assets</h3>
+            <p>rien encore</p>
+    
+            <h3>Backgrounds</h3>
+            <p>Glitchy Backgrounds - BeefManJones</p>
+            <p>Backgrounds and Textures - Morain</p>
+    
+            <h3>Inspirations</h3>
+            <p>Revolution Idle</p>
+            <p>Antimatter Dimensions</p>
+            <p>Synergism</p>
+        </div>
+    </div>
+
     </div>
 
     <script src="cardsData.js" charset="utf-8" type="text/javascript"></script>
     <script src="main.js" charset="utf-8" type="text/javascript"></script>
+    <script src="title.js" charset="utf-8" type="text/javascript"></script>
   </body>
 </html>
